@@ -139,8 +139,8 @@ jobs:
           # ==========================================
           # 自选股配置
           # ==========================================
-          STOCK_LIST: ${{ vars.STOCK_LIST || secrets.STOCK_LIST || '600519' }}
-          MARKET_REVIEW_REGION: ${{ vars.MARKET_REVIEW_REGION || secrets.MARKET_REVIEW_REGION || 'cn' }}
+          STOCK_LIST: ${{ vars.STOCK_LIST || secrets.STOCK_LIST }}
+          MARKET_REVIEW_REGION: ${{ secrets.MARKET_REVIEW_REGION || 'cn' }}
           
           # ==========================================
           # 运行配置 ⬅️ 新增！
@@ -199,11 +199,11 @@ jobs:
           
           # 执行分析
           if [ "$MODE" = "market-only" ]; then
-            python main.py --market-review
+            python main.py --market-review --force-run
           elif [ "$MODE" = "stocks-only" ]; then
-            python main.py --no-market-review
+            python main.py --no-market-review --force-run
           else
-            python main.py
+            python main.py --force-run
           fi
       
       - name: 上传分析报告
